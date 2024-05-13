@@ -1,0 +1,13 @@
+﻿@model Second_Swap.ViewModels.HomeDisplayModel
+
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<partial name="_wrapperBannerPostPartial" />
+<div class="home__wrapperHome mt15">
+    <partial name="_CategoriesWrapperPartial" />
+    <partial name="_NewPostingPartial" />
+</div>

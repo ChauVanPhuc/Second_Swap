@@ -1,0 +1,30 @@
+﻿
+
+
+<div class="intersectBox async-grid">
+<div class="categories__wrapper">
+    <p class="categories__title">Category</p>
+    <div class="wrapperScroll_wrapperOverflow">
+        <div class="styles_twoRowContent">
+            <div class="row">
+
+                @foreach (var category in Model.Categorys)
+                {
+                    <div class="col col-cat-bs4">
+                        <a aria-label="@category.Name" class="categories_a">
+                            <div style="display:inline-block;max-width:100%;overflow:hidden;position:relative;box-sizing:border-box;margin:0">
+                                <div style="box-sizing:border-box;display:block;max-width:100%">
+                                    <img style="max-width:100%;display:block;margin:0;border:none;padding:0" alt="" aria-hidden="true" role="presentation" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODQiIGhlaWdodD0iODQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIi8+"></div>
+                                <img alt="@category.Name" src="~/Uploads/@category.Avatar" decoding="async" class="img-cat" style="position:absolute;top:0;left:0;bottom:0;right:0;box-sizing:border-box;padding:0;border:none;margin:auto;display:block;width:0;height:0;min-width:100%;max-width:100%;min-height:100%;max-height:100%">
+                            </div>
+                            <span class="categories__categoryText">@category.Name</span>
+                        </a>
+                    </div>
+                }
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>

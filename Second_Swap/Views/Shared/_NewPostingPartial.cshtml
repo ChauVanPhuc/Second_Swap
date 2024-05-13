@@ -1,0 +1,75 @@
+﻿
+@model Second_Swap.ViewModels.HomeDisplayModel
+
+
+
+<div class="intersectBox async-grid">
+    <div class="gridAds__wrapper">
+        <p class="gridAds__title">New Post</p>
+        <div class="gridAds__grid adsNew">
+
+
+
+            @foreach (var product in Model.Products)
+            {
+                <div class="adItem_item w20">
+                    <div class="adItem_wrapperLink">
+                        <div class="adItem_vip"></div>        <div class="adThumbnail_thumbnailWrapper">
+                            <a rel="noopener noreferrer" asp-controller="Post" asp-action="PostDetail" asp-route-id="@product.Id" class="adThumbnail_thumbnailImg">
+
+                                @foreach (var img in product.ProductImages.Select((value, index) => new { value, index }))
+                                {
+                                    if (img.index == 0)
+                                    {
+                                        <img src="~/uploads/@img.value.Url" alt="img Product">
+                                        
+
+                                    }
+
+                                }
+                                
+                                
+                                <div class="adThumbnail_imageNum"><span class="adThumbnail_text">1</span></div>
+                            </a>
+@*                             <div class="saveAd_saveAdWrapper adItem_saveAd open-modal" data-id-modal="modal-auth"><button type="button" class="saveAd_btnSavedAd btn_save_ad"><img width="20" src="/media/others/save-ad.svg" alt="like"></button></div> *@
+                        </div>
+                        <div class="adBody_caption">
+                            <a rel="noopener noreferrer" class="commonStyle_adTitleGrid">
+                                 @product.Title
+                            </a>
+                            <div><span class="adBody_price">@product.Price Vnd</span></div>
+                        </div>
+
+
+
+                            <div class="adBody_footer">
+                                <a rel="noopener noreferrer">
+                                @if(product.CreateByNavigation.Avatar != null){
+                                    <img class="commonStyle_image" width="15" src="~/Uploads/@product.CreateByNavigation.FullName" alt="avatar">
+                                }else{
+                                    <img class="commonStyle_image" width="15" src="~/img/NoImage.png" alt="avatar">
+                                }
+                               
+                                </a>
+                                <div class="commonStyle_deviderWrapper"></div>
+                                <div class="adBody_adItemPostedTime"><span class="adBody_text">2 ngày trước</span></div>
+                                <div class="commonStyle_deviderWrapper"></div>
+                                <div cla ss="adBody_adItemPostedTime adBody_location"><span class="adBody_text" style="font-size:10px">@product.CreateByNavigation.Address.Province.Name</span></div>
+                            </div>
+
+                        
+                        
+
+
+
+                    </div>
+                </div>
+            }
+
+
+
+
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+﻿@model Second_Swap.ViewModels.ProfileDisplayModel
+
+
+    <h3 class="mb20 user-title"> <strong>Manage Post</strong> </h3>
+    <div class="user-menu-tab">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Sell</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Selled</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Expired</a>
+            </li>
+        </ul>
+    </div>
+    <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+
+
+        <div class="row no-gutters gutters10">
+
+            @foreach (var item in Model.User.Products)
+            {
+
+
+                <div class="col-lg-4 col-md-4 col-sm-6 col-6">
+                    <div class="item-grid">
+                        <div class="item-grid-label-status"> <span class="ad-status-label ad-status-label-1">Active</span> </div>
+                        <a class="item-grid-img" asp-controller="Post" asp-action="Detail" asp-route-id="@item.Id">
+                            <img class="image-autofocus" src="https://market.vietbase.co/media/images_boards/small/6583bc07930b1.jpg">
+                        </a>
+                        <div class="item-grid-info">
+
+
+                            <div class="item-grid-price">
+                                <span class="item-grid-price-now" style="color: #c90927;">@item.Price</span>
+                            </div>
+
+                            <a >@item.Title</a>
+                        </div>
+                    </div>
+                </div>
+            }
+            
+            
+
+            <div class="col-lg-12">
+                <ul class="pagination justify-content-center mt15">
+                </ul>
+            </div>
+        </div>
+
+
+        </div>
+        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+
+        </div>
+        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+
+        </div>
+    </div>

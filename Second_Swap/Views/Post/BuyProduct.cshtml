@@ -1,0 +1,40 @@
+﻿@model Second_Swap.ViewModels.BuyProductViewModel
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="home__wrapperHome mt15">
+
+    <div class="ads-create-main-data" style="display: block;">
+
+        <form asp-action="AddOrder" asp-controller="Order" asp-route-proId="@Model.ProductId">
+            <h3 style="text-align:center"><strong>Payment</strong></h3>
+            <div class="ads-create-main-data-title">
+                <div class="ads-create-main-data-box-item" style="margin-top: 0px; margin-bottom: 25px;">
+                    <p class="ads-create-subtitle">Product Name</p>
+                    <input asp-for="ProductName" type="text" name="title" disabled class="ads-create-input">
+
+                </div>
+            </div>
+
+            <div class="ads-create-main-data-title">
+                <div class="ads-create-main-data-box-item" style="margin-top: 0px; margin-bottom: 25px;">
+                    <p class="ads-create-subtitle">Product Price</p>
+                    <input asp-for="ProductPrice" type="text" name="title" disabled class="ads-create-input">
+
+                </div>
+            </div>
+      
+            <div class="ads-create-main-data-title">
+                <div class="ads-create-main-data-box-item" style="margin-top: 0px; margin-bottom: 25px;">
+                    <p class="ads-create-subtitle">Message</p>
+                    <textarea asp-for="Message" type="text" name="title" class="ads-create-input">
+                     </textarea>
+                </div>
+            </div>
+
+            <button class="ads-create-publish btn-color-blue" data-action="ad-create"> <span class="action-load-span-start"> <i class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></i> </span>Submit</button>
+        </form>
+    </div>
+</div>

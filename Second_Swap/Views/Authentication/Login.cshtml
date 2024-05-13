@@ -1,0 +1,45 @@
+﻿@model Second_Swap.ViewModels.LoginViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="auth-block-right">
+    <div class="auth-block-right-box">
+
+        <div class="text-center">
+            <a href="/"> <i class="fas fa-arrow-left"></i> Go back to the main page  </a>
+            <h3 class="text-center"> <strong>Login</strong> </h3>
+        </div>
+@*         <p class="text-center mb20" style="color: ##9B9B9B;">Chào bạn quay lại</p> *@
+        <p class="text-center" style="margin-top: 1rem; margin-bottom: 1rem;">
+            Do not have an account? <a asp-controller="authentication" asp-action="register"><strong>Register</strong></a>
+        </p>
+        <form asp-controller="authentication" asp-action="Login" method="post">
+            <div class="auth-block-right-box-tab-1-1">
+                <div>
+                    <input type="text" class="form-control input-style2-custom phone-mask" asp-for="Email" data-format="" placeholder="Email">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+               
+                <div>
+                    <input type="password" class="form-control input-style2-custom phone-mask" asp-for="Password" data-format="" placeholder="Password">
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class=" phone-mask">
+                    <a href="">
+                        Forgot password?
+                    </a>
+                    
+                </div>
+            </div>
+            <button style="submit" class="button-style-custom schema-color-button btn-color-light auth-reg-send mt20"> Login</button>
+
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,189 @@
+﻿@model Second_Swap.ViewModels.RegisterViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="auth-block-right">
+    <div class="auth-block-right-box">
+
+        <div class="text-center">
+            <a href="/"> <i class="fas fa-arrow-left"></i> Go back to the main page </a>
+            <h3 class="text-center"> <strong>Register</strong> </h3>
+        </div>
+        <p class="text-center" style="margin-top: 1rem; margin-bottom: 1rem;">
+            Do you already have an account? <a href="/auth?type=login"><strong>Sign in here</strong></a>
+        </p>
+        <form id="form-validation" asp-controller="Authentication" asp-action="Register" method="post" enctype="multipart/form-data">
+        <div class="auth-block-right-box-tab-1-1">
+            <div>
+                <input type="text" class="form-control input-style2-custom phone-mask" asp-for="FullName" data-format="" placeholder="Full Name">
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+
+            <div>
+                <input type="email" class="form-control input-style2-custom phone-mask" asp-for="Email" data-format="" placeholder="Email">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div>
+                <input type="tel" class="form-control input-style2-custom phone-mask" asp-for="Phone" placeholder="Phone">
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+
+            <div class="d-md-flex justify-content-start align-items-center mb-4 py-2 form-control input-style2-custom phone-mask">
+
+                <h6 class="mb-0 me-4">Gender: </h6>
+
+                <div class="form-check form-check-inline mb-0 me-4">
+                    <input class="form-check-input" asp-for="Gender" type="radio"  id="femaleGender"
+                           value="Female" />
+                    <label class="form-check-label" for="femaleGender">Female</label>
+                </div>
+
+                <div class="form-check form-check-inline mb-0 me-4">
+                    <input class="form-check-input" asp-for="Gender" type="radio" id="maleGender"
+                           value="Male" />
+                    <label class="form-check-label" for="maleGender">Male</label>
+                </div>
+
+                <div class="form-check form-check-inline mb-0">
+                    <input class="form-check-input" asp-for="Gender" type="radio"  id="otherGender"
+                           value="Other" />
+                    <label class="form-check-label" for="otherGender">Other</label>
+                </div>
+
+            </div>
+                
+            <div class="form-group">
+                <div>
+                    <select asp-for="Province" id="provinces_id" class="form-control" asp-items="ViewBag.Provinces">
+                        <option>Choose a Provinces</option>
+                    </select>
+                    <span asp-validation-for="Province" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                        <select asp-for="District" id="district_id" class="form-control">
+                            <option>Choose a District</option>
+                    </select>
+                    <span asp-validation-for="District" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                        <select asp-for="Wards" id="wards_id" class="form-control">
+                            <option>Choose a Wards</option>
+                    </select>
+                    <span asp-validation-for="Wards" class="text-danger"></span>
+                </div>
+            </div>
+
+            
+
+            <div>
+                <input type="date" class="form-control input-style2-custom phone-mask datepicker" asp-for="BirthDay" data-format="" placeholder="BirthDay">
+                <span asp-validation-for="BirthDay" class="text-danger"></span>
+            </div>
+            <div>
+                <input type="password" class="form-control input-style2-custom" asp-for="Password" placeholder="Password">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div>
+                <input type="password" class="form-control input-style2-custom" asp-for="ConfirmPassword" placeholder="Confirm Password">
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <button style="submit" class="button-style-custom schema-color-button btn-color-light auth-reg-send mt20"> Register</button>
+@*             <button class="button-style-custom color-light open-modal mt10" data-id-modal="modal-auth-recovery">Bạn quên mật khẩu?</button>
+ *@        </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+
+
+    <script>
+        $(document).ready(function () {
+
+            $("#provinces_id").change(function () {
+                getCntr();
+                getStt();
+
+            });
+
+            function getCntr() {
+                var trty = $('#provinces_id').val();
+                var select = $('#district_id');
+                select.empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '/Home/GetDistricts',
+                    data: { provinces_id: trty },
+                    success: function (response) {
+                        if (response != 0) {
+                            console.log(response);
+                            var defaultOption = $('<option>').val('').text('Choose a Districts');
+                            select.append(defaultOption);
+                            // Add options based on the received data
+                            $.each(response, function (index, country) {
+                                var option = $('<option>').val(country.id).text(country.name);
+                                select.append(option);
+
+                            });
+                        }
+                        else {
+                            select.empty();
+                            var defaultOption = $('<option>').val('').text('Choose a Districts');
+                            select.append(defaultOption);
+                            console.log('notfound');
+                        }
+                    },
+                    error: function (data, errorThrown) {
+                        alert('request failed :' + errorThrown);
+                    }
+                });
+            }
+
+            $("#district_id").change(function () {
+                getStt();
+            });
+
+            function getStt() {
+                var cty = $('#district_id').val();
+                var select = $('#wards_id');
+                select.empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '/Home/GetWards',
+                    data: { district_id: cty },
+                    success: function (response) {
+                        if (response != 0) {
+                            console.log(response);
+                            var defaultOption = $('<option>').val('').text('Select a Wards');
+                            select.append(defaultOption);
+                            // Add options based on the received data
+                            $.each(response, function (index, stat) {
+                                var option = $('<option>').val(stat.id).text(stat.name);
+                                select.append(option);
+                            });
+                        }
+                        else {
+                            select.empty();
+                            var defaultOption = $('<option>').val('').text('Select a Wards');
+                            select.append(defaultOption);
+                            console.log('notfound');
+                        }
+                    },
+                    error: function (data, errorThrown) {
+                        alert('request failed :' + errorThrown);
+                    }
+                });
+            }
+
+        });
+    </script>
+    <partial name="_ValidationScriptsPartial" />
+}

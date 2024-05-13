@@ -1,0 +1,82 @@
+﻿@model Second_Swap.ViewModels.ProfileDisplayModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="home__wrapperHome mt15">
+
+<nav aria-label="breadcrumb" class="mt15 mb15">
+    <ol class="breadcrumb" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+        <li class="breadcrumb-item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+            <a itemprop="item" href="/">
+                <span itemprop="name">Home</span>
+            </a>
+            <meta itemprop="position" content="1">
+        </li>
+        <li class="breadcrumb-item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+            <a itemprop="item" href="https://market.vietbase.co/user/f3fa1491253fbdf0ea670ad9cb539c3d">
+                <span itemprop="name">Kendy </span>
+            </a>
+            <meta itemprop="position" content="2">
+        </li>
+        <li class="breadcrumb-item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+            <span itemprop="name">Manage Post</span>
+            <meta itemprop="position" content="3">
+        </li>
+    </ol>
+</nav>
+
+<div class="mt15"></div>
+
+
+<div class="profile-page">
+    <div class="row">
+        <div class="col-lg-3 ">
+            <div class="user-sidebar mb30">
+                <div class="user-avatar">
+                    <div class="user-avatar-img">
+                        <span class="user-avatar-replace"> <i class="las la-sync-alt"></i> </span>
+                        <img src="https://market.vietbase.co/media/images_users/5ef059938ba799aaa845e1c2e8a762bd.jpg?174">
+                    </div>
+                    <h4> Kendy  </h4>
+                    <p>Điểm tích luỹ: <strong>0</strong></p>
+                    <p>Create: @Model.User.CreateDay</p>
+                    @* <div class="board-view-stars">
+                        <span class="ion-ios-star-outline"></span>
+                        <span class="ion-ios-star-outline"></span>
+                        <span class="ion-ios-star-outline"></span>
+                        <span class="ion-ios-star-outline"></span>
+                        <span class="ion-ios-star-outline"></span>                                
+                        <div class="clr"></div>
+                    </div> *@
+                </div>
+                <div class="">
+                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        <a class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">My Post</a>
+                        <a class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Manage Order</a>
+                        <a class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Logout</a>
+                    </div>
+                    
+                </div>
+                
+                <form id="user-form-avatar"><input type="file" name="image"></form>
+
+            </div>
+        </div>
+
+        <div class="col-lg-9">
+            <div class="tab-content" id="v-pills-tabContent">
+
+                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                    <partial name="_ManagePostPartial" />
+                </div>
+
+                <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                        <partial name="_ManageOrderPartial" />
+                </div>
+                <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

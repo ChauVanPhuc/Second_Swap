@@ -1,0 +1,168 @@
+﻿@model Second_Swap.ViewModels.PostViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="~/asset/style_upload.css" rel="stylesheet" />
+<div class="home__wrapperHome mt15">
+
+<div class="ads-create-main-data" style="display: block;">
+
+    <form asp-controller="Post" asp-action="AddPost" method="post" enctype="multipart/form-data">
+
+
+    <div class="row" style="margin-top: 0px; margin-bottom: 25px;">
+
+        <div class="ads-create-main-data-city-options col-lg-6" style="display: block;">
+            <div class="ads-create-main-data-box-item">
+                <p class="ads-create-subtitle">Category</p>
+                <div class="ads-create-main-data-city-options-area">
+                    <select class="uni-select" asp-for="CategoryId" id="category_id" asp-items="ViewBag.CategoryId">
+                        <option>Choose a Category</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="ads-create-main-data-city-options col-lg-6" style="display: block;">
+            <div class="ads-create-main-data-box-item">
+                <p class="ads-create-subtitle">Brand</p>
+                <div class="ads-create-main-data-city-options-area">
+                    <select asp-for="BrandId" class="uni-select" id="brand_id">
+                    </select>
+                    <span asp-validation-for="BrandId" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+
+    <div class="ads-create-main-data-title">
+        <div class="ads-create-main-data-box-item" style="margin-top: 0px; margin-bottom: 25px;">
+            <p class="ads-create-subtitle">Title</p>
+            <input asp-for="Title" type="text" name="title" class="ads-create-input">
+            
+        </div>
+    </div>
+    <div class="ads-create-main-data-box-item">
+        <p class="ads-create-subtitle">Description</p>
+        <textarea asp-for="Description" class="ads-create-textarea" rows="6" placeholder="- Status
+- Used Time
+- Warranty if any
+- Repairs, upgrades, accompanying accessories
+- Delivery and return address"></textarea>
+
+    </div>
+    <div class="" style="margin-top: 0px;">
+        <p class="ads-create-subtitle">Image Product</p>
+        
+        <div class="upload">
+            <div class="upload-wrapper">
+                <div class="upload-img">
+                    <!-- image here -->
+                    
+                </div>
+                <div class="upload-info">
+                    <p>
+                        <span class="upload-info-value">0</span> file(s) uploaded.
+                    </p>
+                </div>
+                <div class="upload-area">
+                    <div class="upload-area-img">
+                        <img src="~/Admin/upload.png" alt="">
+                    </div>
+                    <p class="upload-area-text">Select images or <span>browse</span>.</p>
+                </div>
+                <input asp-for="Img" type="file" class="visually-hidden" id="upload-input" multiple>
+            </div>
+        </div>
+
+        <div class="ads-create-main-data-price" style="display: block;">
+            <div class="ads-create-main-data-box-item">
+                <p class="ads-create-subtitle">Price</p>
+                <div class="ads-create-main-data-price-container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="input-dropdown">
+                                <input type="text"asp-for="Price" placeholder="Price" class="ads-create-input inputNumber" maxlength="17" input-format="{&quot;thousandSep&quot;:&quot; &quot;,&quot;decimalSep&quot;:&quot;.&quot;,&quot;maxDecimalDigits&quot;:&quot;unlimited&quot;,&quot;allowDecimals&quot;:true,&quot;allowNegative&quot;:true,&quot;allowLeadingZero&quot;:false}">
+
+                                <div class="input-dropdown-box">
+                                    <div class="uni-dropdown-align">
+                                        <span class="input-dropdown-name-display"> VND </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="msg-error" data-name="price"></div>
+                        </div>
+                        @* <div class="col-lg-6">
+                        <div class="custom-control custom-checkbox mt10">
+                        <input type="checkbox" class="custom-control-input" name="price_free" id="price_free" value="1">
+                        <label class="custom-control-label" for="price_free">Cho tặng miễn phí</label>
+                        </div>
+                        </div> *@
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    @* <div class="ads-create-main-data-box-item">
+        <p class="ads-create-subtitle">Video</p>
+        <p class="create-info"> <i class="las la-question-circle"></i> Bạn có thể thêm liên kết đến video trên Youtube hoặc Vimeo. Chúng tôi thấy rằng các tin đăng có video thực tế sẽ thu hút khách hàng hơn.</p>
+        <input type="text" name="video" class="ads-create-input mt20">
+    </div> *@
+
+    
+    
+    <button class="ads-create-publish btn-color-blue" data-action="ad-create"> <span class="action-load-span-start"> <i class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></i> </span>Submit</button>
+    </form>
+</div>
+</div>
+
+@section Scripts {
+    <script src="~/asset/script_upload.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#category_id").change(function () {
+                getCntr();
+               
+            });
+
+            function getCntr() {
+                var trty = $('#category_id').val();
+                var select = $('#brand_id');
+                select.empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '/Post/GetBrand',
+                    data: { category_id: trty },
+                    success: function (response) {
+                        if (response != 0) {
+                            console.log(response);                            
+                            // Add options based on the received data
+                            $.each(response, function (index, country) {
+                                var option = $('<option>').val(country.id).text(country.name);
+                                select.append(option);
+
+                            });
+                        }
+                        else {
+                            select.empty();
+                            console.log('notfound');
+                        }
+                    },
+                    error: function (data, errorThrown) {
+                        alert('request failed :' + errorThrown);
+                    }
+                });
+            }
+        });
+    </script>
+
+}

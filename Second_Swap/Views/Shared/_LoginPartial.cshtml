@@ -1,0 +1,26 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+    <div class="toolbar-link toolbar-link-profile">
+        <a class="n1y9jvjc" asp-controller="Profile" asp-action="Index" title="Manage">
+
+            <svg data-type="monochrome" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="1em" height="1em" fill="none" class="is750wp"><g fill="none" stroke="currentColor"><circle cx="15" cy="15" r="14.4"></circle><circle cx="15" cy="12" r="4.5"></circle><path d="M25.442 24.63c-1.453-4.536-5.579-7.807-10.442-7.807-4.932 0-9.106 3.365-10.502 8"></path></g></svg>
+            <span id="username">@User.Identity?.Name</span>!
+        </a>
+    </div>
+
+    <div class="toolbar-link">
+        <div class="toolbar-link"><a asp-controller="Post" asp-action="AddPost" class="header-wow-sticky-add btn-color-light">Post for Free </a></div>
+
+    </div>
+}
+else
+{
+    <div class="toolbar-link toolbar-link-profile">
+        <a class="n1y9jvjc" asp-controller="Authentication" asp-action="Login">
+            <svg data-type="monochrome" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="1em" height="1em" fill="none" class="is750wp"><g fill="none" stroke="currentColor"><circle cx="15" cy="15" r="14.4"></circle><circle cx="15" cy="12" r="4.5"></circle><path d="M25.442 24.63c-1.453-4.536-5.579-7.807-10.442-7.807-4.932 0-9.106 3.365-10.502 8"></path></g></svg>
+            <span class="show-desktop suuviek" color="#9B9B9B" style="--suuviek-1:inhirit; --suuviek-9:#9B9B9B;"><b>Login</b></span>
+        </a>
+    </div>
+    <div class="toolbar-link"><a asp-controller="Authentication" asp-action="Register" class="header-wow-sticky-add btn-color-light">Register</a></div>
+}
+

@@ -1,0 +1,201 @@
+﻿@model  Second_Swap.ViewModels.PostDisplayModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/asset/site.css" rel="stylesheet" />
+
+<style>
+    .carousel-indicators img {
+        width: 100%;
+        display: block;
+    }
+
+    .carousel-indicators button {
+        width: max-content !important;
+        height:max-content !important;
+    }
+
+    .carousel-indicators {
+        position: unset;
+    }
+</style>
+
+
+
+
+<div class="container">
+    <nav aria-label="breadcrumb" class="mt15 mb15">
+        <ol class="breadcrumb" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+            <li class="breadcrumb-item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a itemprop="item" href="/">
+                    <span itemprop="name">Home</span>
+                </a>
+                <meta itemprop="position" content="1">
+            </li>
+            <li class="breadcrumb-item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem"><a itemprop="item" ><span itemprop="name">Đồ điện tử</span></a><meta itemprop="position" content="2"></li>
+            <li class="breadcrumb-item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem"><a itemprop="item" h><span itemprop="name">Laptop</span></a><meta itemprop="position" content="3"></li>
+        </ol>
+    </nav>
+    <div class="board-view-container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="ads-view-photo" style="visibility: visible;">
+
+
+                        <div class="carousel slide carousel-dark" id="carouselDemo" data-bs-wrap="true" data-bs-ride="carousel">
+
+                            <div class="carousel-inner">
+                                @foreach (var image in Model.Products.ProductImages.Select((value, index) => new { value, index }))
+                                {
+                                    <div class="carousel-item @(image.index == 0 ? "active" : "")" data-bs-interval="3000">
+                                        <img src="~/uploads/@image.value.Url" />
+                                    </div>
+                                }
+
+                            </div>
+
+                            <button class="carousel-control-prev"
+                                    type="button"
+                                    data-bs-target="#carouselDemo"
+                                    data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" ></span>
+                            </button>
+
+                            <button class="carousel-control-next"
+                                    type="button"
+                                    data-bs-target="#carouselDemo"
+                                    data-bs-slide="next">
+                                <span class="carousel-control-next-icon"></span>
+                            </button>
+
+                            <div class="carousel-indicators">
+
+                                @foreach (var image in Model.Products.ProductImages.Select((value, index) => new { value, index }))
+                                {
+
+                                    <button type="button" class="@(image.index == 0 ? "active" : "")"
+                                            data-bs-target="#carouselDemo"
+                                            data-bs-slide-to="@image.index">
+                                        <img src="~/uploads/@image.value.Url" style="height:50px; width:max-content" />
+                                    </button>
+                                }
+
+                            </div>
+
+                        </div >
+                        
+                     @*    <div class="adImage_imageCaption">
+                        <span class="adImage_imageCaptionText">Tin<!-- --> cá nhân <!-- -->đăng <!-- -->1 phút trước - 1 lượt xem</span>
+                    </div>  *@
+                </div>
+
+
+                   
+                <div class="mt15"></div>
+                    <h1 class="adDecription_adTitle" itemprop="name"> @Model.Products.Title</h1>
+                <div class="adDecription_priceWrapper">
+                    <meta itemprop="position" content="1">
+                    <div class="adDecription_adPrice" itemprop="price">
+                        <span>
+                            <div>
+                                <span class="adDecription_priceWrapper">
+                                    <span class="adDecription_price">
+                                        <span itemprop="price">@Model.Products.Price VND</span>
+                                    </span>
+                                </span>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="mt15"></div>
+                <div class="board-view-button-mobile d-block d-md-none mb25">
+                    <div class="board-view-button">
+                        <div class="adByUser_wrapper" style="margin-bottom: 10px;">
+                            <div class="adByUser_sold_hide open-modal" data-id-modal="modal-order-service" style="color: rgb(255, 255, 255); background-color: rgb(51, 168, 55); border-color: rgb(51, 168, 55); width: 100%;">
+                                <i class="las la-arrow-circle-up" style="margin-right: 5px;"></i>
+                                <span>Bán nhanh hơn <span class="label-sale-mini">SALE!</span></span>
+                            </div>
+                        </div>
+                        <div class="adByUser_wrapper">
+                            @if(Model.Products.IsActive == true){
+                                <a asp-controller="Post" asp-action="isActive" asp-route-id="@Model.Products.Id" class="adByUser_edit_action" style="color: rgb(255, 255, 255); background-color: rgb(51, 168, 55); border-color: rgb(51, 168, 55); width: 100%;"><i class="las la-eye-slash" style="margin-right: 5px;"></i><span>Đã bán / Ẩn tin</span></a>
+                            }
+
+                            else
+                            {
+                                <a asp-controller="Post" asp-action="isActive" asp-route-id="@Model.Products.Id" class="adByUser_sold_hide open-modal" style="color: rgb(255, 255, 255); background-color: rgb(51, 168, 55); border-color: rgb(51, 168, 55); width: 100%;"><i class="las la-eye-slash" style="margin-right: 5px;"></i><span>Chưa bán / Hiện tin</span></a>
+
+                            }
+                            <a asp-controller="Post" asp-action="Edit" asp-route-id="@Model.Products.Id" class="adByUser_edit_action" style="color: rgb(51, 168, 55); background-color: rgb(255, 255, 255); border-color: rgb(51, 168, 55); width: 100%;"><i class="las la-pencil-alt" style="margin-right: 5px;"></i><span>Edit</span></a>
+                        </div>
+                    </div>
+                </div>
+
+                @foreach (var address in Model.Address)
+                {
+                    <div class="row mb15">
+                        <div class="col-lg-3 col-6"><span>Province</span></div>
+                        <div class="col-lg-6 col-12">@address.Province.Name</div>
+                    </div>
+                    <div class="row mb15">
+                        <div class="col-lg-3 col-6"><span>District</span></div>
+                        <div class="col-lg-6 col-12">@address.District.Name</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3 col-6"><span>Wards</span></div>
+                        <div class="col-lg-6 col-12 word-break">
+                            @address.Wards.Name                                      <div class="ads-view-metro">
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                    
+               
+
+                <div class="ads-view-map">
+                    <div id="mapAd"></div>
+                </div>
+
+                <hr>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="word-break">@Model.Products.Description </div>
+                    </div>
+                </div>
+
+              
+            </div>
+            <div class="col-lg-4 no-padding dtView">
+                <div class="board-view-right d-none d-sm-block">
+                    <div class="board-view-button">
+                        <div class="adByUser_wrapper" style="margin-bottom: 10px;">
+                            <div class="adByUser_sold_hide open-modal" data-id-modal="modal-order-service" style="color: rgb(255, 255, 255); background-color: rgb(51, 168, 55); border-color: rgb(51, 168, 55); width: 100%;">
+                                <i class="las la-arrow-circle-up" style="margin-right: 5px;"></i>
+                                <span>Bán nhanh hơn <span class="label-sale-mini">SALE!</span></span>
+                            </div>
+                        </div>
+                        <div class="adByUser_wrapper">
+                            @if (Model.Products.IsActive == true)
+                            {
+                                <a asp-controller="Post" asp-action="isActive" asp-route-id="@Model.Products.Id" class="adByUser_edit_action" style="color: rgb(255, 255, 255); background-color: rgb(51, 168, 55); border-color: rgb(51, 168, 55); width: 100%;"><i class="las la-eye-slash" style="margin-right: 5px;"></i><span>Đã bán / Ẩn tin</span></a>
+                            }
+
+                            else
+                            {
+                                <a asp-controller="Post" asp-action="isActive" asp-route-id="@Model.Products.Id" class="adByUser_sold_hide open-modal" style="color: rgb(255, 255, 255); background-color: rgb(51, 168, 55); border-color: rgb(51, 168, 55); width: 100%;"><i class="las la-eye-slash" style="margin-right: 5px;"></i><span>Chưa bán / Hiện tin</span></a>
+
+                            }
+                            <a asp-controller="Post" asp-action="Edit" asp-route-id="@Model.Products.Id" class="adByUser_edit_action" style="color: rgb(51, 168, 55); background-color: rgb(255, 255, 255); border-color: rgb(51, 168, 55); width: 100%;"><i class="las la-pencil-alt" style="margin-right: 5px;"></i><span>Update</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,109 @@
+﻿@* @model Second_Swap.ViewModels.ProfileUserDisplayModel *@
+@using System.Globalization;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <nav aria-label="breadcrumb" class="mt15 mb15">
+        <ol class="breadcrumb" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+            <li class="breadcrumb-item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a itemprop="item" href="/">
+                    <span itemprop="name">Trang chủ</span>
+                </a>
+                <meta itemprop="position" content="1">
+            </li>
+            <li class="breadcrumb-item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a itemprop="item" href="https://market.vietbase.co/user/4e17bee71222ad5b65fb97062807b4e0">
+                    <span itemprop="name">Thanh </span>
+                </a>
+                <meta itemprop="position" content="2">
+            </li>
+        </ol>
+    </nav>
+    <div class="mt15"></div>
+    <div class="profile-page">
+        <div class="row">
+            <div class="col-lg-3 ">
+                <div class="user-sidebar mb30">
+                    <div class="user-avatar">
+                        <div class="user-avatar-img">
+                            <img src="https://market.vietbase.co/media/others/no_avatar.svg">
+                        </div>
+                        <h4>@Model.User.FullName  </h4>
+                        <p>Create Day: @Model.User.CreateDay.ToString("yyyy/MM/dd")</p>
+                        @* <div class="board-view-stars">
+                            <span class="ion-ios-star-outline"></span>
+                            <span class="ion-ios-star-outline"></span>
+                            <span class="ion-ios-star-outline"></span>
+                            <span class="ion-ios-star-outline"></span>
+                            <span class="ion-ios-star-outline"></span>                                <div class="clr"></div>
+                        </div> *@
+                    </div>
+                    @* <div class="mt15"></div>
+                    <a class="button-style-custom schema-color-button color-blue mb5" href="https://market.vietbase.co/user/4e17bee71222ad5b65fb97062807b4e0/reviews"> <span>Đánh giá (0)</span> </a>
+                    <div class="open-modal button-style-custom color-light" data-id-modal="modal-confirm-block">Chặn người này</div> *@
+                </div>
+            </div>
+
+
+            <div class="col-lg-9 min-height-600">
+
+                <h3 class="mb20 user-title"> <strong>Manage Post</strong> </h3>
+                <div class="user-menu-tab">
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Sell</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Selled</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+
+
+                        <div class="row no-gutters gutters10">
+
+                            @foreach (var item in Model.Products)
+                            {
+
+
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-6">
+                                    <div class="item-grid">
+                                        <div class="item-grid-label-status"> <span class="ad-status-label ad-status-label-1">Hoạt động</span> </div>
+                                        <a class="item-grid-img" asp-controller="Post" asp-action="PostDetail" asp-route-id="@item.Id">
+                                            <img class="image-autofocus" src="https://market.vietbase.co/media/images_boards/small/6583bc07930b1.jpg">
+                                        </a>
+                                        <div class="item-grid-info">    
+
+
+                                            <div class="item-grid-price">
+                                                <span class="item-grid-price-now" style="color: #c90927;">@item.Price</span>
+                                            </div>
+
+                                            <a>@item.Title</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+
+
+                            <div class="col-lg-12">
+                                <ul class="pagination justify-content-center mt15">
+                                </ul>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

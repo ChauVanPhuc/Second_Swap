@@ -1,0 +1,146 @@
+﻿@model List<Second_Swap.ViewModels.ChatViewModel>;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var sender = ViewBag.sender;
+    var sendBTN = "";
+
+    var to = ViewBag.to;
+}
+
+
+<link rel="stylesheet" href="~/css/index.css">
+
+
+<div class="wrapper">
+   
+    <div class="left">
+        <ul class="people">
+
+                @foreach (var c in Model)
+                {
+                
+                <li class="person" onclick="loadChat(@c.revId)">
+                    @if(c.avatar != null){
+                        <img src="~/uploads/@c.avatar" />
+                    }else{
+                        <img src="~/img/user.svg" />
+                    }
+                    
+
+                    <span class="name">@c.RecipientName</span>
+                    @if(to != null){
+                        @ViewBag.to
+                    }
+                    else
+                    {
+                        <span class="time" id="time_@c.revId">@c.LastMessage?.SentAt.Value.ToShortTimeString()</span>
+                    }
+
+                    @if (c.countMeess > 0)
+                    {
+                        <span class="notification" id="notification_@c.revId" style="
+    background-color: red;
+    color: white;
+    font-size: 0.8em;
+    padding: 2px 5px;
+    border-radius: 50%;
+    position: absolute; /* Adjust as necessary */
+    top: 40px; /* Adjust as necessary */
+    right: 50px; /* Adjust as necessary */
+                    ">@c.countMeess</span>
+                    }else{
+                        <span class="notification" id="notification_@c.revId" style="
+    background-color: red;
+    color: white;
+    font-size: 0.8em;
+    padding: 2px 5px;
+    border-radius: 50%;
+    position: absolute; /* Adjust as necessary */
+    top: 40px; /* Adjust as necessary */
+    right: 50px; /* Adjust as necessary */
+                            " hidden>@c.countMeess</span>
+                    }
+
+                    @if (c.countMeess > 0)
+                    {
+                        <span class="name " id="preview_@c.revId">@c.LastMessage?.Content</span>
+
+                    }else{
+                        <span class="preview " id="preview_@c.revId">@c.LastMessage?.Content</span>
+                    }
+                </li>
+                }
+
+        </ul>
+    </div>
+
+    <div class="right">
+        <div class="chat-wrapper shown">
+            
+            <div class="chat">
+            </div>
+            <div id="writeDiv">
+                <div class="write">
+                    
+                    <input type="hidden" id="myUsername" value="@sender" />
+                    <textarea id="message-text" placeholder="Write a message..."></textarea>
+                    
+                    <button id="btn-send" onclick="sendMessage(sendBTN)">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
+
+
+
+
+@section Scripts {
+    <script>
+
+        function loadChat(name) {
+            $('.chat').empty();
+            $.ajax({
+                url: '/Chat/GetChatMessages', // Controller/Action
+                type: 'GET',
+                data: { recipientName: name },
+                success: function (data) {
+                    // Duyệt qua mỗi tin nhắn và thêm vào giao diện chat
+                    $.each(data, function (index, message) {
+                        var messageClass = message.isMyMessage ? 'me' : 'other';
+                        var messageBubble = '<div class="bubble ' + messageClass + '">' +
+                            '<span class="message-text">' + message.text + '</span>' +
+                            '<span class="message-time">' + message.timestamp + '</span>' +
+                            '</div>';
+                        $('.chat').append(messageBubble);
+                        $("#preview_" + name).removeClass("name").addClass("preview");
+                        $("#notification_" + name).text(0);
+                        sendBTN = name;
+                    });
+                    scrollToBottom();
+                }
+            });
+
+        }
+
+
+        $(".write input").keyup(function (event) {
+            if (event.keyCode === 13) {
+                $("#btn-send").click();
+            }
+        });
+
+
+
+
+    </script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/chat.js"></script>
+
+    <script src="~/js/textareaAutosize.js"></script>
+}
